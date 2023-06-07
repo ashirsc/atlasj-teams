@@ -22,9 +22,13 @@
     },
     "dependencies": {
         "@microsoft/teamsfx": "^2.2.0",
+        "@pinecone-database/pinecone": "^0.1.6",
         "botbuilder": "^4.18.0",
+        "chromadb": "^1.5.2",
+        "dotenv": "^16.1.4",
         "hnswlib-node": "^1.4.2",
         "langchain": "^0.0.91",
+        "nanospinner": "^1.1.0",
         "pdf-parse": "^1.1.1",
         "restify": "^10.0.0"
     },
