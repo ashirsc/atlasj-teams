@@ -1,5 +1,6 @@
 import { AskCommandHandler } from "../commandHandlers/ask";
 import { BotBuilderCloudAdapter } from "@microsoft/teamsfx";
+import { ClearCommandHandler } from "../commandHandlers/clear";
 import { LoadCommand } from "../commandHandlers/load";
 import config from "./config";
 import ConversationBot = BotBuilderCloudAdapter.ConversationBot;
@@ -17,6 +18,6 @@ export const commandApp = new ConversationBot({
   },
   command: {
     enabled: true,
-    commands: [new AskCommandHandler(), new LoadCommand()],
+    commands: [new AskCommandHandler(), new LoadCommand(), new ClearCommandHandler()],
   },
 });

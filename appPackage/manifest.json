@@ -42,12 +42,12 @@
                     ],
                     "commands": [
                         {
-                            "title": "/ask",
-                            "description": "Allows you to ask a question against the loaded documents."
+                            "title": "/clear",
+                            "description": "Clears bot memory"
                         },
                         {
                             "title": "/load",
-                            "description": "loads in files for questioning."
+                            "description": "Loads in files for questioning."
                         }
                     ]
                 }

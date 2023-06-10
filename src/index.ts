@@ -1,6 +1,9 @@
+import "dotenv/config"
+
 import * as restify from "restify";
-import { commandApp } from "./internal/initialize";
+
 import { TeamsBot } from "./teamsBot";
+import { commandApp } from "./internal/initialize";
 
 // This template uses `restify` to serve HTTP responses.
 // Create a restify server.

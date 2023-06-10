@@ -10,7 +10,7 @@ export class HNSWSingleton {
     }
 
     private initialize(): void {
-        this.vectorStore = new HNSWLib(new OpenAIEmbeddings({ openAIApiKey: "" }), { space: "cosine" })
+        this.vectorStore = new HNSWLib(new OpenAIEmbeddings({ openAIApiKey: "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" }), { space: "cosine" })
     }
 
     public static getInstance(): HNSWSingleton { // Define the actual types here

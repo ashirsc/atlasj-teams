@@ -1,12 +1,14 @@
 import { Activity, CardFactory, MessageFactory, TurnContext } from "botbuilder";
 import { CommandMessage, TeamsFxBotCommandHandler, TriggerPatterns } from "@microsoft/teamsfx";
+import { ConversationalRetrievalQAChain, RetrievalQAChain } from "langchain/chains";
 import { OpenAI, OpenAIChat } from "langchain/llms/openai";
 
 import { AdaptiveCards } from "@microsoft/adaptivecards-tools";
 import { BasePromptTemplate } from "langchain/prompts";
+import { BufferMemory } from "langchain/memory";
 import { CardData } from "../cardModels";
+import { ConvoRetieveChainFactory } from "../ConvoRetreiveChain";
 import { HNSWSingleton } from "../VectorStore";
-import { RetrievalQAChain } from "langchain/chains";
 import helloWorldCard from "../adaptiveCards/helloworldCommand.json";
 import path from "path"
 
@@ -18,7 +20,7 @@ export class AskCommandHandler implements TeamsFxBotCommandHandler {
   triggerPatterns: string = "/ask";
 
   // llm = new OpenAIChat({ maxConcurrency: 10, openAIApiKey: "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" });
-  model = new OpenAI({openAIApiKey: ""});
+  // model = new OpenAI({ openAIApiKey: "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" });
 
   async handleCommandReceived(
     context: TurnContext,
@@ -26,29 +28,23 @@ export class AskCommandHandler implements TeamsFxBotCommandHandler {
   ): Promise<string | Partial<Activity> | void> {
     console.log(`Ask command received message: ${message.text}`);
 
+
+
     
 
-    const hnsw = await HNSWSingleton.getInstance();
-    const vectorStore = hnsw.getVectorStore()
+   
 
-    // const p:BasePromptTemplate = {
-      
-    // }
-    
-    // const chain = RetrievalQAChain.fromLLM(this.model, vectorStore.asRetriever(), { returnSourceDocuments: true, prompt: });
-    const chain = RetrievalQAChain.fromLLM(this.model, vectorStore.asRetriever(), { returnSourceDocuments: true});
+    const inst =  ConvoRetieveChainFactory.getInstance()
+    const chain = inst.getChain()
+
+
     const res = await chain.call({
-      // query: "What did customers say about LMS integration and onboarding?",
-      query: message.text.replace(this.triggerPatterns, ""),
-
+      question: message.text.replace(this.triggerPatterns, ""),
     });
     console.log({ res, docs: res.sourceDocuments });
 
 
-    return MessageFactory.text(`${res.text}
-
-    ${res.sourceDocuments.map(sd =>  `${path.basename(sd.metadata.source)}${sd.metadata.loc.lines.from}:${sd.metadata.loc.lines.to}`).join(",")}
-    `);
+    return MessageFactory.text(`${res.text}`);
 
   }
 }
